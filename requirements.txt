@@ -1,0 +1,8 @@
+TTS
+googletrans==3.1.0a0
+SpeechRecognition
+pocketsphinx
+--index-url https://download.pytorch.org/whl/cu121
+torch
+torchvision
+torchaudio
