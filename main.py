@@ -44,10 +44,10 @@ def main():
                 language=DEST_LANG
             )
         except RuntimeError:
-            print(f'{file} ({i + 1}/{len(files)}): failed')
+            print(f'{file} ({i + 1}/{len(files)} {100 * float(i + 1) / float(len(files))}%): failed')
             continue
 
-        print(f'{file} ({i + 1}/{len(files)}): {text_transcribed} -> {text_translated}')
+        print(f'{file} ({i + 1}/{len(files)} {100 * float(i + 1) / float(len(files))}%): {text_transcribed} -> {text_translated}')
 
 
 if __name__ == '__main__':
