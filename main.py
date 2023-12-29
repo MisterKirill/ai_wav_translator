@@ -1,5 +1,4 @@
 from os import path, makedirs
-import torch
 from TTS.api import TTS
 import glob
 import speech_recognition as sr
@@ -11,7 +10,6 @@ SRC_LANG = 'en'
 DEST_LANG = 'ru'
 
 tts = TTS('tts_models/multilingual/multi-dataset/xtts_v2')
-tts.to(torch.device('cuda'))
 
 translator = Translator()
 
@@ -38,14 +36,18 @@ def main():
 
         makedirs(path.dirname(output_file), exist_ok=True)
 
-        tts.tts_to_file(
-            text=text_translated,
-            file_path=output_file,
-            speaker_wav=file,
-            language=DEST_LANG
-        )
+        try:
+            tts.tts_to_file(
+                text=text_translated,
+                file_path=output_file,
+                speaker_wav=file,
+                language=DEST_LANG
+            )
+        except RuntimeError:
+            print(f'{file} ({i + 1}/{len(files)}): failed')
+            continue
 
-        print(f'{file} ({i}/{len(files)}): {text_transcribed} -> {text_translated}')
+        print(f'{file} ({i + 1}/{len(files)}): {text_transcribed} -> {text_translated}')
 
 
 if __name__ == '__main__':
